@@ -17,5 +17,15 @@ def test_product_api(client):
 
 # post new cart
 def test_post_cart(client):
-    pass
+    cart_payload = {
+        "coupon_code": "DISCOUNT123",
+        "shipping_fee": 5.99,
+        "cart_items": [
+            {"product_id": 1, "qty": 2, "item_price": 19.99},
+            {"product_id": 2, "qty": 1, "item_price": 29.99}
+        ]
+    }
+    response = client.post("/api/cart", json=cart_payload)
+    assert response.status_code == 200
+    assert response.get_data(as_text=True) == 'data created'
 
